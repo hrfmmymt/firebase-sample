@@ -11,11 +11,26 @@ class App extends Component {
       username: ''
     }
     this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
+    })
+  }
+
+  handleSubmit(e) {
+    e.preventDefault()
+    const itemsRef = firebase.database().ref('items')
+    const item = {
+      title: this.state.currentItem,
+      user: this.state.username
+    }
+    itemsRef.push(item)
+    this.setState({
+      currentItem: '',
+      username: ''
     })
   }
 
@@ -29,7 +44,7 @@ class App extends Component {
         </header>
         <div className='container'>
           <section className='add-item'>
-              <form>
+              <form onSubmit={this.handleSubmit}>
                 <input type="text" name="username" placeholder="What's your name?" onChange={this.handleChange} value={this.state.username} />
                 <input type="text" name="currentItem" placeholder="What are you bringing?" onChange={this.handleChange} value={this.state.currentItem} />
                 <button>Add Item</button>
