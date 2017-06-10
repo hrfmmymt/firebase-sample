@@ -8,7 +8,8 @@ class App extends Component {
     super()
     this.state = {
       currentItem: '',
-      username: ''
+      username: '',
+      items: []
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -31,6 +32,25 @@ class App extends Component {
     this.setState({
       currentItem: '',
       username: ''
+    })
+  }
+
+  componentDidMount() {
+    const itemsRef = firebase.database().ref('items')
+    itemsRef.on('value', (snapshot) => {
+      let items = snapshot.val()
+      let newState = []
+      let item
+      for (item in items) {
+        newState.push({
+          id: item,
+          title: items[item].title,
+          user: items[item].user
+        })
+      }
+      this.setState({
+        items: newState
+      })
     })
   }
 
