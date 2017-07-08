@@ -8,5 +8,9 @@ const config = {
   storageBucket: 'fir-sample-a0882.appspot.com',
   messagingSenderId: '1072850284445'
 }
+
 firebase.initializeApp(config)
+
 export default firebase
+export const provider = new firebase.auth.GoogleAuthProvider()
+export const auth = firebase.auth()
