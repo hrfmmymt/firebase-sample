@@ -97,6 +97,17 @@ class App extends Component {
               }
             </div>
         </header>
+        {this.state.user ?
+          <div>
+            <div className='user-profile'>
+              <img src={this.state.user.photoURL} />
+            </div>
+          </div>
+          :
+          <div className='wrapper'>
+            <p>You must be logged in to see the potluck list and submit to it.</p>
+          </div>
+        }
         <div className='container'>
           <section className='add-item'>
               <form onSubmit={this.handleSubmit}>
